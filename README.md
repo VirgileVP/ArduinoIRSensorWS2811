@@ -1,1 +1,1 @@
-# ArduinoIRSensorLedStrip
+# ArduinoIRSensorWS2811
