@@ -7,7 +7,7 @@ int sensor_value = 0;
 
 #define LED_PIN     3
 #define NB_LEDS     90
-#define BRIGHTNESS  100
+#define BRIGHTNESS  255
 #define LED_TYPE    WS2811
 #define COLOR_ORDER GRB
 CRGB leds[NB_LEDS];
@@ -20,7 +20,7 @@ void setup()
 {
     Serial.begin(9600);
     pinMode(SENSOR_PIN, INPUT);
-    delay(1000); // power-up safety delay
+    delay(1000);
     FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NB_LEDS).setCorrection( TypicalLEDStrip );
     FastLED.setBrightness(BRIGHTNESS);
 }
@@ -29,27 +29,18 @@ void setup()
 void loop()
 {
     sensor_value = digitalRead(SENSOR_PIN);
-    //Serial.print("read = ");
-    //Serial.println(sensor_value);
-    if (sensor_value == LOW && old_value == 1)
-    {
-        Serial.print("sensor = ");
-        Serial.println(sensor_value);
-        rndm_function = random(1, 3);
-        which_function(rndm_function);
-        Serial.println(rndm_function);
-        //OnEffect1(CRGB(255, 125, 40));
-        //FastLED.show();
-        old_value = 0;
-    }
     if (sensor_value == HIGH && old_value == 0)
     {
-        OffAllLeds();
-        Serial.print("sensor = ");
-        Serial.println(sensor_value);
+        rndm_function = random(1, 30);
+        which_function(rndm_function);
         old_value = 1;
     }
-    //FastLED.delay(1000 / UPDATES_PER_SECOND);
+    else if (sensor_value == LOW && old_value == 1)
+    {
+        OffAllLeds();
+        old_value = 0;
+    }
+    delay(300);
 }
 
 void OffAllLeds()
@@ -60,20 +51,20 @@ void OffAllLeds()
     {
         leds[index] = CRGB::Black;
         index++;
-        delay(10);
+        delay(5);
         FastLED.show();
     }
 }
 
 void which_function(int fnct)
 {
-    CRGB color = CRGB(255, 125, 50);
+    CRGB color = CRGB(random(0, 255), random(0, 255), random(0, 255));
 
-    if (fnct == 1)
+    if (fnct > 20)
         OnEffect1(color);
-    else if (fnct == 2)
+    else if (fnct > 10)
         OnEffect2(color);
-    else if (fnct == 3)
+    else if (fnct > 0)
         OnEffect3(color);
 }
 
@@ -85,7 +76,7 @@ void OnEffect1(CRGB color)
     {
         leds[index] = color;
         index++;
-        delay(10);
+        delay(5);
         FastLED.show();
     }
 }
@@ -99,7 +90,7 @@ void OnEffect2(CRGB color)
         leds[NB_LEDS / 2 + index] = color;
         leds[NB_LEDS / 2 - index] = color;
         index++;
-        delay(15);
+        delay(20);
         FastLED.show();
     }
 }
@@ -109,16 +100,16 @@ void OnEffect3(CRGB color)
     int index_zone = 0;
     int index = 0;
 
-    while (index_zone < 10)
+    while (index_zone <20)
     {
         index = index_zone;
         while (index < NB_LEDS)
         {
             leds[index] = color;
-            index+=10;
+            index+=20;
         }
         index_zone++;
-        delay(15);
+        delay(50);
         FastLED.show();
     }
 }
