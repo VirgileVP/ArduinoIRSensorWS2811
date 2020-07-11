@@ -32,18 +32,18 @@ void loop()
     if (sensor_value == HIGH && old_value == 0)
     {
         rndm_function = random(1, 30);
-        which_function(rndm_function);
+        whichFunction(rndm_function);
         old_value = 1;
     }
     else if (sensor_value == LOW && old_value == 1)
     {
-        OffAllLeds();
+        offAllLeds();
         old_value = 0;
     }
     delay(300);
 }
 
-void OffAllLeds()
+void offAllLeds()
 {
     int index = 0;
 
@@ -56,16 +56,16 @@ void OffAllLeds()
     }
 }
 
-void which_function(int fnct)
+void whichFunction(int fnct)
 {
     CRGB color = getColor();
 
     if (fnct > 20)
-        OnEffect1(color);
+        onEffect1(color);
     else if (fnct > 10)
-        OnEffect2(color);
+        onEffect2(color);
     else if (fnct > 0)
-        OnEffect3(color);
+        onEffect3(color);
 }
 
 CRGB getColor()
@@ -82,7 +82,7 @@ CRGB getColor()
     return (red, green, blue);
 }
 
-void OnEffect1(CRGB color)
+void onEffect1(CRGB color)
 {
     int index = 0;
 
@@ -95,7 +95,7 @@ void OnEffect1(CRGB color)
     }
 }
 
-void OnEffect2(CRGB color)
+void onEffect2(CRGB color)
 {
     int index = 0;
 
@@ -109,7 +109,7 @@ void OnEffect2(CRGB color)
     }
 }
 
-void OnEffect3(CRGB color)
+void onEffect3(CRGB color)
 {
     int index_zone = 0;
     int index = 0;
