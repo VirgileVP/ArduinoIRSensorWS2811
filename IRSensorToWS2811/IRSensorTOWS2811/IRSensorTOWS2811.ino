@@ -58,7 +58,7 @@ void OffAllLeds()
 
 void which_function(int fnct)
 {
-    CRGB color = CRGB(random(0, 255), random(0, 255), random(0, 255));
+    CRGB color = getColor();
 
     if (fnct > 20)
         OnEffect1(color);
@@ -66,6 +66,20 @@ void which_function(int fnct)
         OnEffect2(color);
     else if (fnct > 0)
         OnEffect3(color);
+}
+
+CRGB getColor()
+{
+    int red = 0;
+    int green = 0;
+    int blue = 0;
+    while (red + green + blue < 255)
+    {
+        red = random(0, 255);
+        green = random(0, 255);
+        blue = random(0, 255);
+    }
+    return (red, green, blue);
 }
 
 void OnEffect1(CRGB color)
